@@ -1,0 +1,80 @@
+
+    <nav class="navbar">
+        <div class="container-fluid">
+            <form  method="POST" action="/filter"class="d-flex">
+                <input class="form-control me-2" type="search" id="pesquisaInput" name="pesquisaInput"placeholder="" aria-label="Search">
+                <button class="btn" id="pesquisaIcon" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg></button>
+    
+            </form>
+            <div id="logo-titulo">
+                <a href="/" style="text-decoration: none;" id="titulopagina"><h1 style="text-align: center;">Seu Site</h1></a>
+            </div>
+            <!-- Example single danger button -->
+            <div class="d-flex justify-content-end">
+                <% if (user) { %>
+                    <a href="/admin/configuracao/home" style="margin-right: 10px;">Painel de controle</a>
+                    <a href="/logout" style="margin-right: 10px;">Logout</a>
+                <% } else {%>
+                    <a href="/entrar" style="margin-right: 10px;">Login</a>
+                <% } %>  
+
+                <div class="btn-group" >
+                  
+                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="categorias-dropdown">
+                        Catergorias
+                    </button>
+                    <ul class="dropdown-menu" id="categorias-dropdown">
+                        <% categorias.forEach(categoria => { %>
+                            <li><a id="categorias-dropdown"class="dropdown-item" href="/categoria/<%= categoria._id%>"><%= categoria.categoria %></a></li>
+                        <% }) %>
+                    </ul>
+                </div>
+            </div>
+             
+            
+    
+        </div>
+    </nav>
+
+
+<style>
+    .navbar{
+        background-color:black;
+    }
+    #pesquisaIcon{
+        color: #39ff14;
+        position: relative;
+        height: 35px;
+    }
+    #pesquisaInput{
+        width: 200px;
+        height: 35px;
+        background-color: #222222;
+        color:#39ff14;
+    }
+    .btn-group{
+        color: #39ff14;
+    }
+    #logo-titulo{
+        font-size: 25px;
+    }
+    #categorias-dropdown{
+        color:#39ff14;
+        background-color: #222222;
+    }
+    a{
+        color:#39ff14; 
+    }
+    hr{
+        color:#39ff14;
+    }
+    a:hover{
+        color: #39ff14;
+    }
+    
+
+</style>

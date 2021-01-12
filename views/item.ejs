@@ -1,0 +1,32 @@
+<div class="card " style="background-color: #222222;margin-top: 15px;">
+    <div class="row row-cols-auto ">
+        <div class="col" style="">
+            <img style="max-width: 350px;" src="<%=item.linkimg%>">
+        </div>
+        <div class="col-8" style="text-align: center;position: relative;">
+            <h4 style="text-align: center; margin-top: 15px;">
+                <%=item.titulo%>
+            </h4>
+            <hr style="margin-top: 5px;">
+            <p style="text-align: justify;">Lançamento: <%= item.dataFormadata%>
+            </p>
+            <p style="text-align: justify;">Categoria: <%= item.categoria.categoria%>
+            </p>
+            <p style="text-align: justify;">Sinopse: <%=item.sinopse%>
+            </p>
+
+            <div class="row d-flex flex-column d-flex align-items-center">
+                <% links.forEach(link => { %>
+                    <div class="card" style="max-width: 300px;background: #000; margin: 5px;">
+                        <p><%=link.descricao%></p>
+                        <a href="<%=link.link%>" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                          </svg>Download</a>
+                    </div>
+                      
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</div>

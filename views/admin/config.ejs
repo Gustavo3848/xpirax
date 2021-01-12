@@ -1,0 +1,88 @@
+<div class="card" id="form-add">
+    <h1>Adicionar Item</h1>
+    <form action="/admin/adiconaritem" method="POST">
+
+        <div class="row">
+            <label for="titulo">Titulo</label>
+            <input type="text" name="titulo" required=true>
+        </div>
+        <div class="row" style="margin-top:10px;">
+            <label for="sinopse">Sinopse</label>
+            <textarea name="sinopse" cols="30" rows="10" style="height: 75px;" required=true>...</textarea>
+        </div>
+        <div class="row" id="itens-add">
+            <div id="lancamento" class="col-sm">
+                <label for="lancamento" style="margin-right: 10px;">Lançamento</label>
+                <input type="date" name="lancamento" required=true>
+            </div>
+            <div id="img-capa-link" class="col-sm">
+                <label for="link_img_capa">Link imagem de capa</label>
+                <input type="text" name="link_img_capa" required=true>
+            </div>
+            <div id="categoria" class="col-sm">
+                <label for="categoria" style="margin-right: 10px;" >Categoria</label>
+                <select name="categoria" required=true>
+                    <% categorias.forEach(categoria => { %>
+                        <option value="<%= categoria._id %>"><%= categoria.categoria %> </option>
+                    <% }) %>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <button type="submit">Salvar</button>
+        </div>
+
+    </form>
+</div>
+<div class="row">
+    <div class="col-6" style="margin-top: 10px;">
+        <div class="card" id="form-add">
+            <%- include('../partials/categoria.ejs')%>
+        </div>
+
+    </div>
+    <div class="col-6" style="margin-top: 10px;">
+        <div class="card" id="form-add">
+            <%- include('../partials/tableadmin.ejs')%>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    #form-add {
+        background-color: #222222;
+        padding: 20px;
+    }
+
+    #lancamento {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    #img-capa-link {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    
+
+    #itens-add {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    #categoria {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+</style>
