@@ -85,7 +85,7 @@ app.get("/categoria/:categoria",function(req,res){
         Item.find().sort({dataAdd:"desc"}).limit(4).then(function(itens){
             Item.find({categoria:req.params.categoria}).then(function(itensCont){
                 Item.find().sort({acessos:'desc'}).limit(5).then(function(destaques){
-                    res.render('home',{categorias:categorias,itens:itens,itensCont:itensCont,destaques:destaques});
+                    res.render('index',{categorias:categorias,itens:itens,itensCont:itensCont,destaques:destaques});
                 }).catch(function(err){
                     console.log("Erro ao selecionar destaques: " + err);
                 });
@@ -154,7 +154,7 @@ app.post("/filter", function(req,res){
         Item.find().sort({dataAdd:"desc"}).limit(4).then(function(itens){
             Item.find({tag:{$regex:req.body.pesquisaInput.toUpperCase()}}).then(function(itensCont){
                 Item.find().sort({acessos:'desc'}).limit(5).then(function(destaques){
-                    res.render('home',{categorias:categorias,itens:itens,itensCont:itensCont,destaques:destaques});
+                    res.render('index',{categorias:categorias,itens:itens,itensCont:itensCont,destaques:destaques});
                 }).catch(function(err){
                     console.log("Erro ao selecionar destaque: " + err);
                 });
