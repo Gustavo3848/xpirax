@@ -3,15 +3,16 @@
     <h1 style="margin-left: 15px;">Recentes</h1>
     <hr style="margin: 5px;">
     <div style="width:100%;display:flex;justify-content: space-between;">
-        <% for( let index = 0; index < 4; index++ ) { %>
+        
+        <% for( let index = 1; index < 5; index++ ) { %>
             <div id="div_card">
                 <div class="card" id="card_recentes">
                     <img id="img_card"
-                        src="<%=itens[index].linkimg%> "
+                        src="<%=itens[itens.length-index].linkimg%> "
                         class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h3 class="card-text" id="titulo"><%=itens[index].titulo%></h3>
-                        <a href="/<%=itens[index].slug%> " style="text-align: center;">
+                        <h3 class="card-text" id="titulo"><%=itens[itens.length-index].titulo%></h3>
+                        <a href="/<%=itens[itens.length-index].slug%> " style="text-align: center;">
                             <p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-download" viewBox="0 0 16 16">
                                     <path
