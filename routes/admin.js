@@ -97,7 +97,7 @@ routes.get("/configuracao/:filtro",eadmin,function(req,res){
     var views = 0
     if(filtro == "HOME"){
         Categoria.find().then(function(categorias){
-            Item.find().sort({dataAdd:'desc'}).then(function(itens){
+            Item.find().sort({dataAdd:'asc'}).then(function(itens){
                 itens.forEach(item => {
                     views += item.acessos;
                 });
