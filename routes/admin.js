@@ -94,10 +94,14 @@ routes.post("/filtro",eadmin,function(req,res){
 });
 routes.get("/configuracao/:filtro",eadmin,function(req,res){
     var filtro = req.params.filtro.toUpperCase();
+    var views = 0
     if(filtro == "HOME"){
         Categoria.find().then(function(categorias){
-            Item.find().sort({dataAdd:"desc"}).then(function(itens){
-                res.render("admin/config",{categorias:categorias,itens:itens});
+            Item.find().sort({dataAdd:'desc'}).then(function(itens){
+                itens.forEach(item => {
+                    views += item.acessos;
+                });
+                res.render("admin/config",{categorias:categorias,itens:itens,views:views});
                }).catch(function(err){
                 console.log("Erro ao buscar itens:" + err);
                });
@@ -107,7 +111,10 @@ routes.get("/configuracao/:filtro",eadmin,function(req,res){
     }else{
         Categoria.find().then(function(categorias){
             Item.find({titulo: {$regex: filtro}}).then(function(itens){
-                res.render("admin/config",{categorias:categorias,itens:itens});
+                itens.forEach(item => {
+                    views += item.acessos;
+                });
+                res.render("admin/config",{categorias:categorias,itens:itens,views:views});
                }).catch(function(err){
                 console.log("Erro ao buscar itens:" + err);
                });

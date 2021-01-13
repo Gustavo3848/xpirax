@@ -130,7 +130,7 @@ app.get("/:id",function(req,res){
 });
 app.get("/", function(req,res){
     Categoria.find().then(function(categorias){
-        Item.find().sort({dataAdd:"desc"}).limit(4).then(function(itens){
+        Item.find().sort({dataAdd:'desc'}).limit(4).then(function(itens){
             Item.find().then(function(itensCont){
                 Item.find().sort({acessos:'desc'}).limit(5).then(function(destaques){
                     res.render('index',{categorias:categorias,itens:itens,itensCont:itensCont,destaques:destaques});
@@ -151,7 +151,7 @@ app.get("/", function(req,res){
 });
 app.post("/filter", function(req,res){
     Categoria.find().then(function(categorias){
-        Item.find().sort({dataAdd:"desc"}).limit(4).then(function(itens){
+        Item.find().sort({dataAdd:'desc'}).limit(4).then(function(itens){
             Item.find({tag:{$regex:req.body.pesquisaInput.toUpperCase()}}).then(function(itensCont){
                 Item.find().sort({acessos:'desc'}).limit(5).then(function(destaques){
                     res.render('index',{categorias:categorias,itens:itens,itensCont:itensCont,destaques:destaques});
