@@ -17,7 +17,7 @@ const Usuario = mongoose.model("usuario")
 const Categoria = mongoose.model("categoria");
 const Item = mongoose.model("item");
 const Link = mongoose.model("link");
-
+const _ = require('lodash')
 //SESSION
 app.use(session({
     secret:"xpirax",
@@ -82,7 +82,8 @@ app.post("/addregistro",function(req,res){
 });
 app.get("/categoria/:categoria",function(req,res){
     Categoria.find().then(function(categorias){
-        Item.find().sort('-dataAdd').limit(4).then(function(itens){
+        Item.find().then(function(itens){
+            itens = _.orderBy(itens,'dataAdd','desc')
             Item.find({categoria:req.params.categoria}).then(function(itensCont){
                 Item.find().sort({acessos:'desc'}).limit(5).then(function(destaques){
                     res.render('index',{categorias:categorias,itens:itens,itensCont:itensCont,destaques:destaques});
@@ -130,8 +131,9 @@ app.get("/:id",function(req,res){
 });
 app.get("/", function(req,res){
     Categoria.find().then(function(categorias){
-        Item.find().sort('-dataAdd').limit(4).then(function(itens){
-            Item.find().then(function(itensCont){
+        Item.find().then(function(itens){
+            itens = _.orderBy(itens,'dataAdd','desc');
+            Item.find().populate('categoria').then(function(itensCont){
                 Item.find().sort({acessos:'desc'}).limit(5).then(function(destaques){
                     res.render('index',{categorias:categorias,itens:itens,itensCont:itensCont,destaques:destaques});
                 }).catch(function(err){
