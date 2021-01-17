@@ -17,7 +17,8 @@ const Usuario = mongoose.model("usuario")
 const Categoria = mongoose.model("categoria");
 const Item = mongoose.model("item");
 const Link = mongoose.model("link");
-const _ = require('lodash')
+const _ = require('lodash');
+const { intersection } = require('lodash');
 //SESSION
 app.use(session({
     secret:"xpirax",
@@ -83,8 +84,8 @@ app.post("/addregistro",function(req,res){
 app.get("/categoria/:categoria",function(req,res){
     Categoria.find().then(function(categorias){
         Item.find().then(function(itens){
-            itens = _.orderBy(itens,'dataAdd','desc')
-            itens = _.range(4);
+            itens = _.orderBy(itens,'dataAdd','desc');
+            itens = _.take(itens,4);
             Item.find({categoria:req.params.categoria}).then(function(itensCont){
                 Item.find().sort({acessos:'desc'}).limit(5).then(function(destaques){
                     res.render('index',{categorias:categorias,itens:itens,itensCont:itensCont,destaques:destaques});
@@ -134,7 +135,7 @@ app.get("/", function(req,res){
     Categoria.find().then(function(categorias){
         Item.find().then(function(itens){
             itens = _.orderBy(itens,'dataAdd','desc');
-            itens = _.range(4);
+            itens = _.take(itens,4);
             Item.find().populate('categoria').then(function(itensCont){
                 Item.find().sort({acessos:'desc'}).limit(5).then(function(destaques){
                     res.render('index',{categorias:categorias,itens:itens,itensCont:itensCont,destaques:destaques});
@@ -156,8 +157,8 @@ app.get("/", function(req,res){
 app.post("/filter", function(req,res){
     Categoria.find().then(function(categorias){
         Item.find().then(function(itens){
-            itens = _.orderBy(itens,'dataAdd','desc')
-            itens = _.range(4);
+            itens = _.orderBy(itens,'dataAdd','desc');
+            itens = _.take(itens,4);
             Item.find({tag:{$regex:req.body.pesquisaInput.toUpperCase()}}).then(function(itensCont){
                 Item.find().sort({acessos:'desc'}).limit(5).then(function(destaques){
                     res.render('index',{categorias:categorias,itens:itens,itensCont:itensCont,destaques:destaques});
