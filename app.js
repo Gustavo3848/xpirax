@@ -40,7 +40,7 @@ app.use(bodyParser.json())
 app.use(expressLayouts);    
 app.set('view engine', 'ejs');
 //MONGOOSE
-mongoose.connect("mongodb://localhost/crud").then(function () {
+mongoose.connect("mongodb://adminxpirax:rerogu361@mongo_xpirax:27017/xpirax").then(function () {
     console.log("Conectado com o banco de dados...")
 }).catch(function (erro) {
     console.log("Erro ao conectar com o bando de dados: " + erro)
