@@ -40,7 +40,7 @@ app.use(bodyParser.json())
 app.use(expressLayouts);    
 app.set('view engine', 'ejs');
 //MONGOOSE
-mongoose.connect("mongodb://adminxpirax:rerogu361@mongo_xpirax:27017/xpirax").then(function () {
+mongoose.connect("mongodb://localhost/crud").then(function () {
     console.log("Conectado com o banco de dados...")
 }).catch(function (erro) {
     console.log("Erro ao conectar com o bando de dados: " + erro)
@@ -84,6 +84,7 @@ app.get("/categoria/:categoria",function(req,res){
     Categoria.find().then(function(categorias){
         Item.find().then(function(itens){
             itens = _.orderBy(itens,'dataAdd','desc')
+            itens = _.range(4);
             Item.find({categoria:req.params.categoria}).then(function(itensCont){
                 Item.find().sort({acessos:'desc'}).limit(5).then(function(destaques){
                     res.render('index',{categorias:categorias,itens:itens,itensCont:itensCont,destaques:destaques});
@@ -133,6 +134,7 @@ app.get("/", function(req,res){
     Categoria.find().then(function(categorias){
         Item.find().then(function(itens){
             itens = _.orderBy(itens,'dataAdd','desc');
+            itens = _.range(4);
             Item.find().populate('categoria').then(function(itensCont){
                 Item.find().sort({acessos:'desc'}).limit(5).then(function(destaques){
                     res.render('index',{categorias:categorias,itens:itens,itensCont:itensCont,destaques:destaques});
@@ -153,7 +155,9 @@ app.get("/", function(req,res){
 });
 app.post("/filter", function(req,res){
     Categoria.find().then(function(categorias){
-        Item.find().sort('-dataAdd').limit(4).then(function(itens){
+        Item.find().then(function(itens){
+            itens = _.orderBy(itens,'dataAdd','desc')
+            itens = _.range(4);
             Item.find({tag:{$regex:req.body.pesquisaInput.toUpperCase()}}).then(function(itensCont){
                 Item.find().sort({acessos:'desc'}).limit(5).then(function(destaques){
                     res.render('index',{categorias:categorias,itens:itens,itensCont:itensCont,destaques:destaques});

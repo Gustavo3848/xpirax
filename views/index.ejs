@@ -1,5 +1,18 @@
 <%- include('partials/recentes.ejs')%>
-<div class="row">
-    <div class="col-9"><%- include('user/conteudo.ejs')%></div>
-    <div class="col-3"><%- include('user/maisbaixados.ejs')%></div>
-</div>
+    <div class="row">
+        <% if (itensCont) { %>
+            <div class="col-9">
+                <%- include('user/conteudo.ejs')%>
+            </div>
+            <% } else { %>
+
+            <% } %>
+                    <% if (destaques) { %>
+                        <div class="col-3">
+                            <%- include('user/maisbaixados.ejs')%>
+                        </div>
+                        <% } else { %>
+
+                            <% } %>
+
+    </div>

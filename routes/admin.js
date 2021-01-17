@@ -10,7 +10,7 @@ const Categoria = mongoose.model('categoria');
 const moment = require('moment');
 const {eadmin} = require("../helpers/eadmin"); 
 
-
+moment.locale('pt-br');
 
 //ADICIONAR CATEGORIA
 routes.post("/adicionarcategoria",eadmin,function(req,res){
@@ -49,14 +49,16 @@ routes.post("/editarcategoria/:id",eadmin,function(req,res){
 //ADIONAR ITEM
 routes.post("/adiconaritem",eadmin,function(req,res){
     var data = Date.now();
+    var dataLancamento = new Date (req.body.lancamento);
     var Array = [];
     Array[0] = req.body.titulo.toUpperCase();
     Array[1] = req.body.sinopse.toUpperCase();
     Array[2] = dataLancamento;   
     var slug = "download-"+req.body.titulo.split(' ').join('-').toLowerCase();
-    var dataLancamento = req.body.lacamento;
-    dataLancamento = moment(dataLancamento).format('DD/MM/YYYY');
-    data = moment(data).format('DD/MM/YYYY')
+    console.log(dataLancamento)
+    dataLancamento = moment(dataLancamento).format('l');
+   
+    data = moment(data).format('l')
     console.log(dataLancamento)
     const item=({
         titulo: req.body.titulo.toUpperCase(),
@@ -125,20 +127,23 @@ routes.get("/configuracao/:filtro",eadmin,function(req,res){
     
 });
 routes.get("/edit/:id",eadmin,function(req,res){
-    Item.findById(req.params.id).populate("categoria").then(function(item){
-        Categoria.find({}).then(function(categorias){
-            Link.find({item:req.params.id}).then(function(links){
-                res.render("admin/configlink",{item:item,categorias:categorias,links:links});
+    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+        Item.findById(req.params.id).populate("categoria").then(function(item){
+            Categoria.find({}).then(function(categorias){
+                Link.find({item:req.params.id}).then(function(links){
+                    res.render("admin/configlink",{item:item,categorias:categorias,links:links});
+                }).catch(function(err){
+                    console.log("Erro ao selecionar links: " + err);
+                });
             }).catch(function(err){
-                console.log("Erro ao selecionar links: " + err);
+                console.log("Erro ao selecionar categorias: " + err);
             });
         }).catch(function(err){
-            console.log("Erro ao selecionar categorias: " + err);
+            console.log("Erro ao selecionar item: " + err);
+            res.redirect("/admin/configuracao/");
         });
-    }).catch(function(err){
-        console.log("Erro ao selecionar item: " + err);
-        res.redirect("/admin/configuracao/");
-    });
+      }
+    
 });
 routes.post("/editar/:campo/:id",eadmin,function(req,res){
  switch(req.params.campo){
@@ -164,7 +169,10 @@ routes.post("/editar/:campo/:id",eadmin,function(req,res){
          break;
      }
      case 'dataLancamento':{
-        Item.findByIdAndUpdate(req.params.id,{dataLancamento:req.body.dado}).then(function(){
+        var data = new Date(req.body.dado)
+        data = moment(data).format('l');
+        Item.findByIdAndUpdate(req.params.id,{dataLancamento:req.body.dado,dataLancamentoFormatada:data}).then(function(){
+            
             res.redirect("/admin/edit/" + req.params.id);
             console.log("Campo " + req.params.campo + " atualizado");
          }).catch(function(err){
